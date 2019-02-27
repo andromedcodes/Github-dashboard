@@ -1,6 +1,8 @@
 package com.viseo.githubdashboard.network
 
-import retrofit2.Response
+import com.viseo.githubdashboard.data.responses.SearchUserResponse
+import com.viseo.githubdashboard.data.responses.UserRepositoriesResponse
+import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -8,14 +10,14 @@ import retrofit2.http.Query
 interface GithubServices {
 
     @GET("/search/users")
-    fun lookupUsersByUsername(@Query("q") username: String): Response<Void>
+    fun lookupUsersByUsernameAsync(@Query("q") username: String): Deferred<SearchUserResponse>
 
     @GET("/users/{username}/repos")
-    fun getReposByUsername(@Path("username") username: String): Response<Void>
+    fun getReposByUsernameAsync(@Path("username") username: String): Deferred<UserRepositoriesResponse>
 
     @GET("/repos/{username}/{repo_name}")
-    fun getRepoDetails(
+    fun getRepoDetailsAsync(
         @Path("username") username: String,
         @Path("repo_name") repoName: String
-    ): Response<Void>
+    ): Deferred<Void>
 }
